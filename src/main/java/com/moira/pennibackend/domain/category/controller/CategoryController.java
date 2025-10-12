@@ -1,15 +1,15 @@
 package com.moira.pennibackend.domain.category.controller;
 
+import com.moira.pennibackend.domain.category.dto.request.CategoryAddRequest;
 import com.moira.pennibackend.domain.category.dto.response.CategoryResponse;
+import com.moira.pennibackend.domain.category.service.CategoryAddService;
 import com.moira.pennibackend.domain.category.service.CategorySelectService;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
 import com.moira.pennibackend.global.auth.UserPrincipal;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api")
 @RestController
 public class CategoryController {
+    private final CategoryAddService categoryAddService;
     private final CategorySelectService categorySelectService;
 
     @GetMapping("/group/{groupId}/category/income")
@@ -37,5 +38,16 @@ public class CategoryController {
         List<CategoryResponse> list = categorySelectService.getExpenseCategories(groupId, simpleUserAuth);
 
         return ResponseEntity.ok().body(list);
+    }
+
+    @PostMapping("/group/{groupId}/category")
+    ResponseEntity<Object> addCategory(
+            @RequestBody CategoryAddRequest request,
+            @PathVariable String groupId,
+            @UserPrincipal SimpleUserAuth simpleUserAuth
+    ) {
+        categoryAddService.addCategory(request, groupId, simpleUserAuth);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 }

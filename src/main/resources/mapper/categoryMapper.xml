@@ -11,4 +11,30 @@
         FROM   ACCOUNT_BOOK_CATEGORY
         WHERE  group_id = #{groupId} AND type = #{type}
     </select>
+
+    <!-- 카테고리 추가 -->
+    <select id="selectLastDisplayOrder">
+        SELECT display_order
+        FROM   ACCOUNT_BOOK_CATEGORY
+        WHERE  group_id = #{groupId}
+        ORDER BY display_order DESC
+        LIMIT 1
+    </select>
+
+    <insert id="insertCategory" parameterType="com.moira.pennibackend.global.entity.AccountBookCategory">
+        INSERT INTO ACCOUNT_BOOK_CATEGORY (
+               type
+             , group_id
+             , name
+             , display_order
+             , created_at
+        )
+        VALUES (
+               #{type}
+             , #{groupId}
+             , #{name}
+             , #{displayOrder}
+             , CURRENT_TIMESTAMP
+        )
+    </insert>
 </mapper>

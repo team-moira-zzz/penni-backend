@@ -18,7 +18,8 @@ public enum ErrorCode {
 
     // 그룹 관련 에러코드
     JOINED_TWO_OR_MORE_GROUP("G001", "알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요."),
-    GROUP_ID_NOT_FOUND("G002", "잘못된 그룹 ID입니다. 접근 권한이 없습니다.");
+    GROUP_ID_NOT_FOUND("G002", "잘못된 그룹 ID입니다. 접근 권한이 없습니다."),
+    INVALID_CATEGORY_TYPE("G003", "올바르지 않은 카테고리 타입입니다.");
 
     private final String code;
     private final String message;
