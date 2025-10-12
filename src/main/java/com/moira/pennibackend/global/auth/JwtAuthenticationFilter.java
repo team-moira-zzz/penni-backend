@@ -71,7 +71,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws IOException {
-        log.info("[요청 URI] {}", request.getRequestURI());
+        log.info("[요청 URI] {} {}", request.getMethod(), request.getRequestURI());
 
         // 1. Authorization 헤더 값 가져오기
         String authorizationHeaderValue = request.getHeader(HttpHeaders.AUTHORIZATION);
