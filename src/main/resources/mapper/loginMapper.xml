@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moira.pennibackend.domain.login.mapper.LoginMapper">
+    <!-- 회원가입 -->
+    <insert id="insertUser" parameterType="com.moira.pennibackend.global.entity.User">
+        INSERT INTO USER (
+               id
+             , email
+             , name
+             , nickname
+             , phone
+             , role
+             , status
+             , type
+             , rtk
+             , last_login_at
+             , created_at
+             , updated_at
+        ) VALUES (
+               #{id}
+             , #{email}
+             , #{name}
+             , #{nickname}
+             , #{phone}
+             , #{role}
+             , #{status}
+             , #{type}
+             , null
+             , null
+             , CURRENT_TIMESTAMP
+             , CURRENT_TIMESTAMP
+        )
+    </insert>
+
+    <!-- 로그인 -->
+    <select id="selectUserByEmail" resultType="com.moira.pennibackend.global.entity.User">
+        SELECT
+               id
+             , role
+             , status
+             , type
+             , email
+             , name
+             , nickname
+             , phone
+             , rtk
+             , last_login_at
+             , created_at
+             , updated_at
+        FROM   USER
+        WHERE  email = #{email}
+    </select>
+
+    <update id="updateUserWhenLogin">
+        UPDATE USER
+        SET
+               rtk           = #{rtk}
+             , last_login_at = CURRENT_TIMESTAMP
+             , updated_at    = CURRENT_TIMESTAMP
+        WHERE  id = #{id}
+    </update>
+
+    <insert id="insertUserLoginHistory" parameterType="com.moira.pennibackend.global.entity.UserLoginHistory">
+        INSERT INTO USER_LOGIN_HISTORY (
+               id
+             , user_id
+             , ip_address
+             , login_type
+             , login_at
+             , logout_at
+        )
+        VALUES (
+               #{id}
+             , #{userId}
+             , #{ipAddress}
+             , #{loginType}
+             , CURRENT_TIMESTAMP
+             , null
+        )
+    </insert>
+</mapper>
