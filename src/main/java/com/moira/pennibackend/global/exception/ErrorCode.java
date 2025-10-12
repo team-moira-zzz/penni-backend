@@ -14,7 +14,10 @@ public enum ErrorCode {
     INVALID_AUTHORIZATION_HEADER("A001", "Authorization 헤더에 토큰 정보가 포함되어 있지 않습니다."),
     EXPIRED_ATK("A002", "Access Token이 만료되었습니다."),
     INVALID_TOKEN1("A003", "토큰 서명이 유효하지 않거나 형식이 올바르지 않습니다."),
-    INVALID_TOKEN2("A004", "유효하지 않은 토큰입니다.");
+    INVALID_TOKEN2("A004", "유효하지 않은 토큰입니다."),
+
+    // 그룹 관련 에러코드
+    JOINED_TWO_OR_MORE_GROUP("G001", "알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.");
 
     private final String code;
     private final String message;
