@@ -1,8 +1,8 @@
 package com.moira.pennibackend.domain.login.controller;
 
-import com.moira.pennibackend.domain.login.dto.AccessTokenResponse;
-import com.moira.pennibackend.domain.login.dto.KakaoCodeRequest;
-import com.moira.pennibackend.domain.login.dto.TokenResponse;
+import com.moira.pennibackend.domain.login.dto.response.AccessTokenResponse;
+import com.moira.pennibackend.domain.login.dto.request.KakaoCodeRequest;
+import com.moira.pennibackend.domain.login.dto.response.TokenResponse;
 import com.moira.pennibackend.domain.login.service.KakaoLoginService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

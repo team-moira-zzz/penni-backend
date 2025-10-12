@@ -1,4 +1,4 @@
-package com.moira.pennibackend.domain.login.dto.kakao;
+package com.moira.pennibackend.domain.login.dto.response.kakao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

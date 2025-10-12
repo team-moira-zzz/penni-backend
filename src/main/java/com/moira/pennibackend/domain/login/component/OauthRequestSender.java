@@ -1,7 +1,7 @@
 package com.moira.pennibackend.domain.login.component;
 
-import com.moira.pennibackend.domain.login.dto.kakao.KakaoTokenResponse;
-import com.moira.pennibackend.domain.login.dto.kakao.KakaoUserInfoResponse;
+import com.moira.pennibackend.domain.login.dto.response.kakao.KakaoTokenResponse;
+import com.moira.pennibackend.domain.login.dto.response.kakao.KakaoUserInfoResponse;
 import com.moira.pennibackend.global.exception.ErrorCode;
 import com.moira.pennibackend.global.exception.custom.PenniUserException;
 import lombok.RequiredArgsConstructor;

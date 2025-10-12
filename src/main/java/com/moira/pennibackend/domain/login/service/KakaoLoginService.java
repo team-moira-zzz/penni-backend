@@ -1,8 +1,8 @@
 package com.moira.pennibackend.domain.login.service;
 
 import com.moira.pennibackend.domain.login.component.OauthRequestSender;
-import com.moira.pennibackend.domain.login.dto.TokenResponse;
-import com.moira.pennibackend.domain.login.dto.kakao.KakaoUserInfoResponse;
+import com.moira.pennibackend.domain.login.dto.response.TokenResponse;
+import com.moira.pennibackend.domain.login.dto.response.kakao.KakaoUserInfoResponse;
 import com.moira.pennibackend.domain.login.mapper.LoginMapper;
 import com.moira.pennibackend.global.auth.JwtProvider;
 import com.moira.pennibackend.global.entity.User;
