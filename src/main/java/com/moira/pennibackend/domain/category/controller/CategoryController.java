@@ -3,6 +3,7 @@ package com.moira.pennibackend.domain.category.controller;
 import com.moira.pennibackend.domain.category.dto.request.CategoryAddRequest;
 import com.moira.pennibackend.domain.category.dto.response.CategoryResponse;
 import com.moira.pennibackend.domain.category.service.CategoryAddService;
+import com.moira.pennibackend.domain.category.service.CategoryDeleteService;
 import com.moira.pennibackend.domain.category.service.CategorySelectService;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
 import com.moira.pennibackend.global.auth.UserPrincipal;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 public class CategoryController {
     private final CategoryAddService categoryAddService;
+    private final CategoryDeleteService categoryDeleteService;
     private final CategorySelectService categorySelectService;
 
     @GetMapping("/group/{groupId}/category/income")
@@ -49,5 +51,16 @@ public class CategoryController {
         categoryAddService.addCategory(request, groupId, simpleUserAuth);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    }
+
+    @DeleteMapping("/group/{groupId}/category/{categoryId}")
+    ResponseEntity<Object> deleteCategory(
+            @PathVariable String groupId,
+            @PathVariable Long categoryId,
+            @UserPrincipal SimpleUserAuth simpleUserAuth
+    ) {
+        categoryDeleteService.deleteCategory(categoryId, groupId, simpleUserAuth);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }

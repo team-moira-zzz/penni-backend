@@ -15,4 +15,7 @@ public interface CategoryMapper {
     Integer selectLastDisplayOrder(String groupId);
 
     void insertCategory(AccountBookCategory accountBookCategory);
+
+    // 카테고리 삭제
+    void deleteCategory(String groupId, Long id);
 }

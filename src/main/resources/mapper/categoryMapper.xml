@@ -37,4 +37,10 @@
              , CURRENT_TIMESTAMP
         )
     </insert>
+
+    <!-- 카테고리 삭제 -->
+    <delete id="deleteCategory">
+        DELETE FROM ACCOUNT_BOOK_CATEGORY
+        WHERE group_id = #{groupId} AND id = #{id}
+    </delete>
 </mapper>
