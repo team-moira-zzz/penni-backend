@@ -7,4 +7,8 @@ public class PenniConstant {
     public final static String KAKAO_AUTH_URL = "https://kauth.kakao.com/oauth/authorize";
     public final static String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     public final static String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me?secure_resource=true";
+
+    // 그룹 관련
+    public static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    public static final int CODE_LENGTH = 8;
 }
