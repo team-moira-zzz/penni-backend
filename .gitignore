@@ -38,6 +38,7 @@ out/
 
 ### Custom ###
 /local/
-application-local.yml
 /src/main/resources/static/**
 /src/main/resources/templates/**
+application-local.yml
+ddl.sql
