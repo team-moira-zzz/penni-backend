@@ -17,7 +17,8 @@ public enum ErrorCode {
     INVALID_TOKEN2("A004", "유효하지 않은 토큰입니다."),
 
     // 그룹 관련 에러코드
-    JOINED_TWO_OR_MORE_GROUP("G001", "알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.");
+    JOINED_TWO_OR_MORE_GROUP("G001", "알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요."),
+    GROUP_ID_NOT_FOUND("G002", "잘못된 그룹 ID입니다. 접근 권한이 없습니다.");
 
     private final String code;
     private final String message;

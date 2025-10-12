@@ -8,6 +8,12 @@
         WHERE  user_id = #{userId} AND left_at IS NULL
     </select>
 
+    <select id="checkGroupUser">
+        SELECT COUNT(group_id)
+        FROM   ACCOUNT_BOOK_GROUP_USER
+        WHERE  user_id = #{userId} AND group_id = #{groupId} AND left_at IS NULL
+    </select>
+
     <!-- 그룹 생성 및 가입 -->
     <insert id="insertAccountBookGroup" parameterType="com.moira.pennibackend.global.entity.AccountBookGroup">
         INSERT INTO ACCOUNT_BOOK_GROUP (

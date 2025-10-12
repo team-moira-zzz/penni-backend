@@ -19,7 +19,7 @@ public class GroupController {
     private final GroupCreateService groupCreateService;
 
     @GetMapping("/group/check")
-    ResponseEntity<GroupIdResponse> checkGroupUser(@UserPrincipal SimpleUserAuth simpleUserAuth) {
+    ResponseEntity<GroupIdResponse> getGroupId(@UserPrincipal SimpleUserAuth simpleUserAuth) {
         String groupId = groupCheckService.getGroupId(simpleUserAuth);
         GroupIdResponse groupIdResponse = new GroupIdResponse(groupId);
 

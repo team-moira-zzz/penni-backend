@@ -11,6 +11,8 @@ public interface GroupMapper {
     // 그룹 가입 여부 조회
     List<String> selectGroupId(String userId);
 
+    int checkGroupUser(String groupId, String userId);
+
     // 그룹 생성 및 가입
     void insertAccountBookGroup(AccountBookGroup accountBookGroup);
 
