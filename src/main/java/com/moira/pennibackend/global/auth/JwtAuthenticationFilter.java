@@ -113,6 +113,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
+            log.error("e: ", e);
             sendErrorResponse(
                     response,
                     "Access Token이 만료되었습니다.",
@@ -120,6 +121,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     HttpStatus.UNAUTHORIZED
             );
         } catch (SignatureException | MalformedJwtException e) {
+            log.error("e: ", e);
             sendErrorResponse(
                     response,
                     "토큰 서명이 유효하지 않거나 형식이 올바르지 않습니다.",
@@ -127,6 +129,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     HttpStatus.UNAUTHORIZED
             );
         } catch (UnsupportedJwtException e) {
+            log.error("e: ", e);
             sendErrorResponse(
                     response,
                     "유효하지 않은 토큰입니다.",
