@@ -1,5 +1,6 @@
 package com.moira.pennibackend.domain.group.service;
 
+import com.moira.pennibackend.domain.category.service.DefaultCategoryAddService;
 import com.moira.pennibackend.domain.group.dto.request.GroupCreateRequest;
 import com.moira.pennibackend.domain.group.mapper.GroupMapper;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
@@ -18,6 +19,8 @@ import static com.moira.pennibackend.global.constant.PenniConstant.CODE_LENGTH;
 @Service
 public class GroupCreateService {
     private final GroupMapper groupMapper;
+    private final DefaultCategoryAddService defaultCategoryAddService;
+
     private static final SecureRandom RANDOM = new SecureRandom();
 
     private String generateRandomCode() {
@@ -42,5 +45,8 @@ public class GroupCreateService {
         // [2] DB에 그룹 및 그룹 유저를 저장
         groupMapper.insertAccountBookGroup(accountBookGroup);
         groupMapper.insertAccountBookGroupUser(accountBookGroupUser);
+
+        // [3] 기본 카테고리 추가
+        defaultCategoryAddService.addDefaultCategories(accountBookGroup.getId());
     }
 }

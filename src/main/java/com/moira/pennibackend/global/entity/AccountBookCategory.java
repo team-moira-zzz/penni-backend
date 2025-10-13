@@ -17,6 +17,14 @@ public class AccountBookCategory {
     private int displayOrder;
     private LocalDateTime createdAt;
 
+    public AccountBookCategory(String groupId, CategoryType type, String name, int displayOrder) {
+        this.type = type;
+        this.groupId = groupId;
+        this.name = name;
+        this.displayOrder = displayOrder;
+        this.createdAt = LocalDateTime.now();
+    }
+
     public AccountBookCategory(CategoryAddRequest request, String groupId, int displayOrder) {
         this.type = CategoryType.valueOf(request.type());
         this.groupId = groupId;

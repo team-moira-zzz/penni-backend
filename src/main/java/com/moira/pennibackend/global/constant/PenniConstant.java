@@ -1,5 +1,7 @@
 package com.moira.pennibackend.global.constant;
 
+import java.util.List;
+
 public class PenniConstant {
     // 로그인 관련
     public final static String RTK_COOKIE_NAME = "refreshToken";
@@ -11,4 +13,7 @@ public class PenniConstant {
     // 그룹 관련
     public static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     public static final int CODE_LENGTH = 8;
+
+    public static List<String> DEFAULT_INCOME_CATEGORY_NAMES = List.of("급여/월급", "용돈", "금융/투자", "기타");
+    public static List<String> DEFAULT_EXPENSE_CATEGORY_NAMES = List.of("식비", "교통비", "데이트", "문화/취미", "건강/의료", "교육/육아", "기타");
 }
