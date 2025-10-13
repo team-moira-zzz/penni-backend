@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moira.pennibackend.domain.profile.mapper.ProfileMapper">
+    <select id="selectMyProfile" resultType="com.moira.pennibackend.domain.profile.dto.response.ProfileResponse">
+        SELECT
+               id
+             , type
+             , email
+             , name
+             , nickname
+             , phone
+             , last_login_at AS lastLoginAt
+             , created_at AS createdAt
+        FROM USER
+    </select>
+
+</mapper>
