@@ -31,4 +31,40 @@
         )
     </insert>
 
+    <!-- 일별 가계부 항목 조회 -->
+    <select id="selectDailyEntryList" resultType="com.moira.pennibackend.domain.entry.dto.response.DailyEntryResponse">
+        SELECT
+               A.id
+             , A.type
+             , A.content
+             , A.description
+             , A.price
+             , A.category_id AS categoryId
+             , C.name        AS categoryName
+             , A.user_id     AS userId
+             , B.nickname    AS userNickname
+        FROM   ACCOUNT_BOOK_ENTRY A
+        /* INNER JOIN: USER 테이블 */
+        INNER JOIN USER B
+        ON         B.id = A.user_id
+        /* LEFT JOIN: ACCOUNT_BOOK_CATEGORY 테이블 */
+        LEFT JOIN ACCOUNT_BOOK_CATEGORY C
+        ON         C.id = A.category_id
+        AND        C.group_id = #{groupId}
+        /* 조건문 */
+        WHERE      A.group_id = #{groupId}
+        AND        A.date = #{date}
+        /* 정렬 */
+        ORDER BY   A.created_at DESC
+    </select>
+
+    <!-- 일별 가계부 수입 및 지출 총합 -->
+    <select id="selectDailyEntryTotal" resultType="com.moira.pennibackend.domain.entry.dto.response.DailyEntryTotalResponse">
+        SELECT
+               #{date}
+             , IFNULL(SUM(CASE WHEN type = 'INCOME' THEN price ELSE 0 END), 0)
+             , IFNULL(SUM(CASE WHEN type = 'EXPENSE' THEN price ELSE 0 END), 0)
+        FROM ACCOUNT_BOOK_ENTRY
+        WHERE group_id = #{groupId} AND date = #{date}
+    </select>
 </mapper>
