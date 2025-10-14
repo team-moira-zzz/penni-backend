@@ -45,6 +45,7 @@
              , A.content
              , A.description
              , A.price
+             , A.method
              , A.category_id AS categoryId
              , C.name        AS categoryName
              , A.user_id     AS userId
