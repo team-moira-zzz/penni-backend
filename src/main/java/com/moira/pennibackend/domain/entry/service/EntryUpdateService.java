@@ -1,9 +1,8 @@
 package com.moira.pennibackend.domain.entry.service;
 
-import com.moira.pennibackend.domain.entry.dto.request.AccountBookEntryAddRequest;
 import com.moira.pennibackend.domain.entry.dto.request.AccountBookEntryUpdateRequest;
 import com.moira.pennibackend.domain.entry.mapper.EntryMapper;
-import com.moira.pennibackend.domain.group.mapper.GroupMapper;
+import com.moira.pennibackend.global.aop.GroupUserCheck;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
 import com.moira.pennibackend.global.entity.enums.AccountBookEntryMethod;
 import com.moira.pennibackend.global.entity.enums.AccountBookEntryType;
@@ -18,15 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class EntryUpdateService {
     private final EntryMapper entryMapper;
-    private final GroupMapper groupMapper;
-
-    private void validate(String groupId, String userId) {
-        int count = groupMapper.checkGroupUser(groupId, userId);
-
-        if (count < 1) {
-            throw new PenniGroupException(ErrorCode.GROUP_ID_NOT_FOUND, HttpStatus.UNAUTHORIZED);
-        }
-    }
 
     private void validate(AccountBookEntryUpdateRequest request) {
         try {
@@ -42,8 +32,7 @@ public class EntryUpdateService {
         }
     }
 
-    // TODO: 추후 AOP로 어노테이션화 하기
-    private void validate(String groupId, String entryId, Boolean todo) {
+    private void validate(String groupId, String entryId) {
         int count = entryMapper.selectEntryChk(groupId, entryId);
 
         if (count < 1) {
@@ -51,13 +40,11 @@ public class EntryUpdateService {
         }
     }
 
+    @GroupUserCheck
     @Transactional
     public void update(String groupId, String entryId, AccountBookEntryUpdateRequest request, SimpleUserAuth simpleUserAuth) {
-        String userId = simpleUserAuth.userId();
-
         // [1] 유효성 검사
-        this.validate(groupId, userId);
-        this.validate(groupId, entryId, true);
+        this.validate(groupId, entryId);
 
         // [2] 수정
         entryMapper.updateEntry(request, groupId, entryId);
