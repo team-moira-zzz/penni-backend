@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moira.pennibackend.domain.entry.mapper.EntryMapper">
     <!-- 가계부 항목 검증 (그룹 포함 여부 확인) -->
-    <select id="selectEntryChk">
+    <select id="checkGroupEntry">
         SELECT COUNT(id)
         FROM   ACCOUNT_BOOK_ENTRY
         WHERE  group_id = #{groupId} AND id = #{entryId}

@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface EntryMapper {
     // 가계부 항목 검증 (그룹 포함 여부 확인)
-    int selectEntryChk(String groupId, String entryId);
+    int checkGroupEntry(String groupId, String entryId);
 
     // 가계부 항목 추가
     void insertEntry(AccountBookEntry accountBookEntry);
