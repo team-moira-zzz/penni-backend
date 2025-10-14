@@ -1,10 +1,13 @@
 package com.moira.pennibackend.domain.entry.controller;
 
 import com.moira.pennibackend.domain.entry.dto.request.AccountBookEntryAddRequest;
+import com.moira.pennibackend.domain.entry.dto.request.AccountBookEntryUpdateRequest;
 import com.moira.pennibackend.domain.entry.dto.response.DailyEntryResponse;
 import com.moira.pennibackend.domain.entry.dto.response.DailyEntryTotalResponse;
 import com.moira.pennibackend.domain.entry.service.DailyEntrySelectService;
 import com.moira.pennibackend.domain.entry.service.EntryAddService;
+import com.moira.pennibackend.domain.entry.service.EntryDeleteService;
+import com.moira.pennibackend.domain.entry.service.EntryUpdateService;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
 import com.moira.pennibackend.global.auth.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,8 @@ import java.util.List;
 @RestController
 public class EntryController {
     private final EntryAddService entryAddService;
+    private final EntryDeleteService entryDeleteService;
+    private final EntryUpdateService entryUpdateService;
     private final DailyEntrySelectService dailyEntrySelectService;
 
     @PostMapping("/group/{groupId}/entries")
@@ -57,5 +62,28 @@ public class EntryController {
         DailyEntryTotalResponse result = dailyEntrySelectService.getDailyEntriesTotal(groupId, date);
 
         return ResponseEntity.ok(result);
+    }
+
+    @PutMapping("/group/{groupId}/entries/{entryId}")
+    ResponseEntity<Object> updateEntry(
+            @PathVariable String groupId,
+            @PathVariable String entryId,
+            @RequestBody AccountBookEntryUpdateRequest request,
+            @UserPrincipal SimpleUserAuth simpleUserAuth
+    ) {
+        entryUpdateService.update(groupId, entryId, request, simpleUserAuth);
+
+        return ResponseEntity.ok(null);
+    }
+
+    @DeleteMapping("/group/{groupId}/entries/{entryId}")
+    ResponseEntity<Object> deleteEntry(
+            @PathVariable String groupId,
+            @PathVariable String entryId,
+            @UserPrincipal SimpleUserAuth simpleUserAuth
+    ) {
+        entryDeleteService.delete(groupId, entryId, simpleUserAuth);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }

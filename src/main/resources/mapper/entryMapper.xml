@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moira.pennibackend.domain.entry.mapper.EntryMapper">
+    <!-- 가계부 항목 검증 (그룹 포함 여부 확인) -->
+    <select id="selectEntryChk">
+        SELECT COUNT(id)
+        FROM   ACCOUNT_BOOK_ENTRY
+        WHERE  group_id = #{groupId} AND id = #{entryId}
+    </select>
     <!-- 가계부 항목 저장 -->
     <insert id="insertEntry" parameterType="com.moira.pennibackend.global.entity.AccountBookEntry">
         INSERT INTO ACCOUNT_BOOK_ENTRY (
@@ -67,4 +73,23 @@
         FROM ACCOUNT_BOOK_ENTRY
         WHERE group_id = #{groupId} AND date = #{date}
     </select>
+
+    <!-- 가계부 항목 수정 -->
+    <update id="updateEntry">
+        UPDATE ACCOUNT_BOOK_ENTRY
+        SET
+               category_id = #{request.categoryId}
+             , content     = #{request.content}
+             , description = #{request.description}
+             , price       = #{request.price}
+             , type        = #{request.type}
+             , method      = #{request.method}
+        WHERE  id = #{entryId} AND group_id = #{groupId}
+    </update>
+
+    <!-- 가계부 항목 삭제 -->
+    <delete id="deleteEntry">
+        DELETE FROM ACCOUNT_BOOK_ENTRY
+        WHERE id = #{entryId} AND group_id = #{groupId}
+    </delete>
 </mapper>
