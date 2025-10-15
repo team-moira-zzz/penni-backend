@@ -8,6 +8,7 @@ import com.moira.pennibackend.global.entity.AccountBookCategory;
 import com.moira.pennibackend.global.entity.enums.CategoryType;
 import com.moira.pennibackend.global.exception.ErrorCode;
 import com.moira.pennibackend.global.exception.custom.PenniGroupException;
+import com.moira.pennibackend.global.utility.EnumValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CategoryAddService {
     private final CategoryMapper categoryMapper;
+    private final EnumValidator enumValidator;
     private final GroupMapper groupMapper;
 
     private void validate(String groupId, String userId) {
@@ -28,11 +30,7 @@ public class CategoryAddService {
     }
 
     private void validate(CategoryAddRequest request) {
-        try {
-            CategoryType.valueOf(request.type());
-        } catch (IllegalArgumentException e) {
-            throw new PenniGroupException(ErrorCode.INVALID_CATEGORY_TYPE, HttpStatus.BAD_REQUEST);
-        }
+        enumValidator.validateStringValue(CategoryType.class, request.type(), ErrorCode.INVALID_CATEGORY_TYPE);
     }
 
     @Transactional
