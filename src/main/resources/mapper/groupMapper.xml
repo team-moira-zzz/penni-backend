@@ -50,4 +50,11 @@
              , #{leftAt}
         )
     </insert>
+
+    <!-- 초대 코드 조회 -->
+    <select id="selectCode" resultType="com.moira.pennibackend.domain.group.dto.response.InviteCodeResponse">
+        SELECT code
+        FROM   ACCOUNT_BOOK_GROUP
+        WHERE  id = #{groupId}
+    </select>
 </mapper>

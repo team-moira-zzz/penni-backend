@@ -1,5 +1,6 @@
 package com.moira.pennibackend.domain.group.mapper;
 
+import com.moira.pennibackend.domain.group.dto.response.InviteCodeResponse;
 import com.moira.pennibackend.global.entity.AccountBookGroup;
 import com.moira.pennibackend.global.entity.AccountBookGroupUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,4 +18,7 @@ public interface GroupMapper {
     void insertAccountBookGroup(AccountBookGroup accountBookGroup);
 
     void insertAccountBookGroupUser(AccountBookGroupUser accountBookGroupUser);
+
+    // 초대 코드 조회
+    InviteCodeResponse selectCode(String groupId);
 }
