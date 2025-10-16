@@ -4,9 +4,10 @@ import com.moira.pennibackend.domain.entry.dto.request.AccountBookEntryAddReques
 import com.moira.pennibackend.domain.entry.dto.request.AccountBookEntryUpdateRequest;
 import com.moira.pennibackend.domain.entry.dto.response.DailyEntryResponse;
 import com.moira.pennibackend.domain.entry.dto.response.DailyEntryTotalResponse;
-import com.moira.pennibackend.domain.entry.service.DailyEntrySelectService;
+import com.moira.pennibackend.domain.entry.dto.response.MonthlyEntryTotalResponse;
 import com.moira.pennibackend.domain.entry.service.EntryAddService;
 import com.moira.pennibackend.domain.entry.service.EntryDeleteService;
+import com.moira.pennibackend.domain.entry.service.EntrySelectService;
 import com.moira.pennibackend.domain.entry.service.EntryUpdateService;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
 import com.moira.pennibackend.global.auth.UserPrincipal;
@@ -24,8 +25,8 @@ import java.util.List;
 public class EntryController {
     private final EntryAddService entryAddService;
     private final EntryDeleteService entryDeleteService;
+    private final EntrySelectService entrySelectService;
     private final EntryUpdateService entryUpdateService;
-    private final DailyEntrySelectService dailyEntrySelectService;
 
     @PostMapping("/group/{groupId}/entries")
     ResponseEntity<Object> addEntry(
@@ -46,7 +47,7 @@ public class EntryController {
             @PathVariable Integer day
     ) {
         LocalDate date = LocalDate.of(year, month, day);
-        List<DailyEntryResponse> list = dailyEntrySelectService.getDailyEntries(groupId, date);
+        List<DailyEntryResponse> list = entrySelectService.getDailyEntries(groupId, date);
 
         return ResponseEntity.ok(list);
     }
@@ -59,7 +60,19 @@ public class EntryController {
             @PathVariable Integer day
     ) {
         LocalDate date = LocalDate.of(year, month, day);
-        DailyEntryTotalResponse result = dailyEntrySelectService.getDailyEntriesTotal(groupId, date);
+        DailyEntryTotalResponse result = entrySelectService.getDailyEntriesTotal(groupId, date);
+
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/group/{groupId}/entries/total/{year}/{month}")
+    ResponseEntity<MonthlyEntryTotalResponse> getMonthlyDailyEntriesTotal(
+            @PathVariable String groupId,
+            @PathVariable Integer year,
+            @PathVariable Integer month
+    ) {
+        String dateString = "%2d%2d".formatted(year, month);
+        MonthlyEntryTotalResponse result = entrySelectService.getMonthlyEntriesTotal(groupId, dateString);
 
         return ResponseEntity.ok(result);
     }

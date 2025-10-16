@@ -34,7 +34,6 @@ public class GroupController {
         groupCreateService.createGroup(request, simpleUserAuth);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
-
     }
 
 }

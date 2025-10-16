@@ -3,6 +3,7 @@ package com.moira.pennibackend.domain.entry.mapper;
 import com.moira.pennibackend.domain.entry.dto.request.AccountBookEntryUpdateRequest;
 import com.moira.pennibackend.domain.entry.dto.response.DailyEntryResponse;
 import com.moira.pennibackend.domain.entry.dto.response.DailyEntryTotalResponse;
+import com.moira.pennibackend.domain.entry.dto.response.MonthlyEntryTotalResponse;
 import com.moira.pennibackend.global.entity.AccountBookEntry;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,6 +22,9 @@ public interface EntryMapper {
     List<DailyEntryResponse> selectDailyEntryList(String groupId, LocalDate date);
 
     DailyEntryTotalResponse selectDailyEntryTotal(String groupId, LocalDate date);
+
+    // 월별 가계부 항목 조회
+    MonthlyEntryTotalResponse selectMonthlyEntryTotal(String groupId, String dateString);
 
     // 가계부 항목 수정
     void updateEntry(AccountBookEntryUpdateRequest request, String groupId, String entryId);

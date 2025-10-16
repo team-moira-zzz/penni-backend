@@ -75,6 +75,15 @@
         WHERE group_id = #{groupId} AND date = #{date}
     </select>
 
+    <!-- 월별 가계부 수입 및 지출 총합 -->
+    <select id="selectMonthlyEntryTotal" resultType="com.moira.pennibackend.domain.entry.dto.response.MonthlyEntryTotalResponse">
+        SELECT
+               IFNULL(SUM(CASE WHEN type = 'INCOME' THEN price ELSE 0 END), 0)
+             , IFNULL(SUM(CASE WHEN type = 'EXPENSE' THEN price ELSE 0 END), 0)
+        FROM ACCOUNT_BOOK_ENTRY
+        WHERE group_id = #{groupId} AND DATE_FORMAT(date, '%Y%m') = #{dateString}
+    </select>
+
     <!-- 가계부 항목 수정 -->
     <update id="updateEntry">
         UPDATE ACCOUNT_BOOK_ENTRY
