@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moira.pennibackend.domain.logout.mapper.LogoutMapper">
-    <!-- 로그아웃 -->
+    <!-- ========================================================================================================== -->
+    <!-- 로그아웃 시 유저 정보 수정 -->
     <update id="updateUserWhenLogout">
-        UPDATE USER
+        UPDATE "USER"
         SET
                rtk        = null
-             , updated_at = CURRENT_TIMESTAMP
+             , updated_at = NOW()
         WHERE  id = #{userId}
     </update>
 </mapper>

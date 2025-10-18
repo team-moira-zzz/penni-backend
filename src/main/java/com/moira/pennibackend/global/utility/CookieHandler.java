@@ -18,4 +18,15 @@ public class CookieHandler {
 
         response.addCookie(cookie);
     }
+
+    public void removeRtkFromCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie(RTK_COOKIE_NAME, null);
+
+        // cookie.setSecure(true);         // HTTPS 연결에서만 전송 (운영 환경에서는 주석 해제)
+        cookie.setHttpOnly(true);          // JavaScript로 접근 불가능
+        cookie.setPath("/");               // 모든 경로에서 쿠키 사용 가능
+        cookie.setMaxAge(0);               // 쿠키 만료
+
+        response.addCookie(cookie);
+    }
 }

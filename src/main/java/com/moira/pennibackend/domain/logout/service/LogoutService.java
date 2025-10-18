@@ -15,7 +15,7 @@ public class LogoutService {
     public void logout(SimpleUserAuth simpleUserAuth) {
         String userId = simpleUserAuth.userId();
 
-        // rtk 삭제
+        // [1] RTK 삭제
         logoutMapper.updateUserWhenLogout(userId);
     }
 }
