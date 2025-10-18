@@ -19,13 +19,6 @@ public class KakaoLoginService {
     private final KakaoLoginSender kakaoLoginSender;
     private final LoginMapper loginMapper;
 
-    private TokenResponse createTokens(User user) {
-        String atk = jwtProvider.createAtk(user);
-        String rtk = jwtProvider.createRtk(user);
-
-        return new TokenResponse(atk, rtk);
-    }
-
     @Transactional
     public TokenResponse login(String code, String ipAddress) {
         // [1] 유저 정보 조회 (카카오 API 통신)
@@ -45,7 +38,7 @@ public class KakaoLoginService {
         }
 
         // [2-2] JWT 토큰 생성
-        TokenResponse tokens = createTokens(user);
+        TokenResponse tokens = jwtProvider.createTokens(user);
 
         // [3] 로그인 기록 저장
         UserLoginHistory userLoginHistory = new UserLoginHistory(user, ipAddress);

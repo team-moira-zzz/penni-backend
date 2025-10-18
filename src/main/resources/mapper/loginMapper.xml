@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moira.pennibackend.domain.login.mapper.LoginMapper">
+    <!-- ========================================================================================================== -->
     <!-- 회원가입 -->
     <insert id="insertUser" parameterType="com.moira.pennibackend.global.entity.User">
-        INSERT INTO USER (
+        INSERT INTO "USER" (
                id
              , email
              , name
@@ -16,7 +17,8 @@
              , last_login_at
              , created_at
              , updated_at
-        ) VALUES (
+        )
+        VALUES (
                #{id}
              , #{email}
              , #{name}
@@ -27,12 +29,13 @@
              , #{type}
              , null
              , null
-             , CURRENT_TIMESTAMP
-             , CURRENT_TIMESTAMP
+             , NOW()
+             , NOW()
         )
     </insert>
 
-    <!-- 로그인 -->
+    <!-- ========================================================================================================== -->
+    <!-- 이메일로 유저 조회 -->
     <select id="selectUserByEmail" resultType="com.moira.pennibackend.global.entity.User">
         SELECT
                id
@@ -47,21 +50,24 @@
              , last_login_at
              , created_at
              , updated_at
-        FROM   USER
-        WHERE  email = #{email}
+        FROM "USER"
+        WHERE email = #{email}
     </select>
 
+    <!-- ========================================================================================================== -->
+    <!-- 로그인 시 유저 정보 수정 -->
     <update id="updateUserWhenLogin">
-        UPDATE USER
-        SET
-               rtk           = #{rtk}
-             , last_login_at = CURRENT_TIMESTAMP
-             , updated_at    = CURRENT_TIMESTAMP
-        WHERE  id = #{id}
+        UPDATE "USER"
+        SET    rtk           = #{rtk}
+             , last_login_at = NOW()
+             , updated_at    = NOW()
+        WHERE id = #{id}
     </update>
 
+    <!-- ========================================================================================================== -->
+    <!-- 로그인 이력 저장 -->
     <insert id="insertUserLoginHistory" parameterType="com.moira.pennibackend.global.entity.UserLoginHistory">
-        INSERT INTO USER_LOGIN_HISTORY (
+        INSERT INTO "USER_LOGIN_HISTORY" (
                id
              , user_id
              , ip_address
@@ -70,11 +76,11 @@
              , logout_at
         )
         VALUES (
-               #{id}
+              #{id}
              , #{userId}
              , #{ipAddress}
              , #{loginType}
-             , CURRENT_TIMESTAMP
+             , NOW()
              , null
         )
     </insert>

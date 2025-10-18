@@ -8,12 +8,8 @@ import com.moira.pennibackend.global.auth.JwtProvider;
 import com.moira.pennibackend.global.entity.User;
 import com.moira.pennibackend.global.entity.UserLoginHistory;
 import com.moira.pennibackend.global.entity.enums.UserType;
-import com.moira.pennibackend.global.exception.ErrorCode;
-import com.moira.pennibackend.global.exception.custom.PenniUserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -23,24 +19,11 @@ public class NaverLoginService {
     private final JwtProvider jwtProvider;
     private final LoginMapper loginMapper;
     private final NaverLoginSender naverLoginSender;
-    private final RedisTemplate<String, String> redisTemplate;
-
-    private TokenResponse createTokens(User user) {
-        String atk = jwtProvider.createAtk(user);
-        String rtk = jwtProvider.createRtk(user);
-
-        return new TokenResponse(atk, rtk);
-    }
+    private final NaverLoginStateService naverLoginStateService;
 
     public TokenResponse login(String code, String state, String ipAddress) {
         // [1] state 검증
-        if (!redisTemplate.hasKey("naver:state:" + state)) {
-            log.error(
-                    "[네이버 로그인 오류] {}. Received state: {}",
-                    ErrorCode.NAVER_LOGIN_INVALID_STATE.getMessage(), state
-            );
-            throw new PenniUserException(ErrorCode.NAVER_LOGIN_INVALID_STATE, HttpStatus.BAD_REQUEST);
-        }
+        naverLoginStateService.check(state);
 
         // [2] 유저 정보 조회 (네이버 API 통신)
         String naverAtk = naverLoginSender.getToken(code, state);
@@ -62,7 +45,7 @@ public class NaverLoginService {
         }
 
         // [3-2] JWT 토큰 생성
-        TokenResponse tokens = createTokens(user);
+        TokenResponse tokens = jwtProvider.createTokens(user);
 
         // [4] 로그인 기록 저장
         UserLoginHistory userLoginHistory = new UserLoginHistory(user, ipAddress);

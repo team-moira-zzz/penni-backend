@@ -1,5 +1,6 @@
 package com.moira.pennibackend.global.auth;
 
+import com.moira.pennibackend.domain.login.dto.response.TokenResponse;
 import com.moira.pennibackend.global.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -59,12 +60,19 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String createAtk(User user) {
+    private String createAtk(User user) {
         return createToken(user, expirationTimeOfAtk);
     }
 
-    public String createRtk(User user) {
+    private String createRtk(User user) {
         return createToken(user, expirationTimeOfRtk);
+    }
+
+    public TokenResponse createTokens(User user) {
+        String atk = this.createAtk(user);
+        String rtk = this.createRtk(user);
+
+        return new TokenResponse(atk, rtk);
     }
 
     public String substringToken(String authorizationHeaderValue) {

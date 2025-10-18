@@ -14,6 +14,7 @@ public class PenniConstant {
     public final static String NAVER_TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
     public final static String NAVER_USER_INFO_URL = "https://openapi.naver.com/v1/nid/me";
 
+    public final static String NAVER_STATE_REDIS_PREFIX = "naver:state:";
     // 그룹 관련
     public static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     public static final int CODE_LENGTH = 8;
