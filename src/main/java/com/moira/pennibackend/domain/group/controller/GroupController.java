@@ -47,11 +47,10 @@ public class GroupController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/group/{groupId}")
-    ResponseEntity<GroupResponse> getGroupInfo(@PathVariable String groupId) {
-        GroupResponse response = groupSelectService.getGroupInfo(groupId);
+    @GetMapping("/group")
+    ResponseEntity<GroupResponse> getGroupInfo(@RequestParam String code) {
+        GroupResponse response = groupSelectService.getGroupInfo(code);
 
         return ResponseEntity.ok(response);
     }
-
 }

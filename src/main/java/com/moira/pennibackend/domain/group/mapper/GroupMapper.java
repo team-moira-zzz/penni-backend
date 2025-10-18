@@ -24,5 +24,5 @@ public interface GroupMapper {
     InviteCodeResponse selectCode(String groupId);
 
     // 그룹 정보 조회
-    GroupResponse selectGroupInfo(String groupId);
+    GroupResponse selectGroupByCode(String code);
 }

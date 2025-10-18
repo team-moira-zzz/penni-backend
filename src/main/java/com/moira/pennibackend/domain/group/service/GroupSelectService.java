@@ -19,6 +19,6 @@ public class GroupSelectService {
 
     @Transactional(readOnly = true)
     public GroupResponse getGroupInfo(String groupId) {
-        return groupMapper.selectGroupInfo(groupId);
+        return groupMapper.selectGroupByCode(groupId);
     }
 }

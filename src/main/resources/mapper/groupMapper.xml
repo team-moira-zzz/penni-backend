@@ -59,7 +59,7 @@
     </select>
 
     <!-- 그룹 정보 조회 -->
-    <select id="selectGroup" resultType="com.moira.pennibackend.domain.group.dto.response.GroupResponse">
+    <select id="selectGroupByCode" resultType="com.moira.pennibackend.domain.group.dto.response.GroupResponse">
         SELECT
                A.id          AS groupId
              , A.name        AS name
@@ -71,5 +71,6 @@
         FROM       ACCOUNT_BOOK_GROUP A
         INNER JOIN USER               B
         ON B.id = A.user_id
+        WHERE A.code = #{code}
     </select>
 </mapper>
