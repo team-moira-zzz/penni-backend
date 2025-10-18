@@ -2,6 +2,7 @@ package com.moira.pennibackend.domain.group.controller;
 
 import com.moira.pennibackend.domain.group.dto.request.GroupCreateRequest;
 import com.moira.pennibackend.domain.group.dto.response.GroupIdResponse;
+import com.moira.pennibackend.domain.group.dto.response.GroupResponse;
 import com.moira.pennibackend.domain.group.dto.response.InviteCodeResponse;
 import com.moira.pennibackend.domain.group.service.GroupCheckService;
 import com.moira.pennibackend.domain.group.service.GroupCreateService;
@@ -42,6 +43,13 @@ public class GroupController {
     @GetMapping("/group/{groupId}/code")
     ResponseEntity<InviteCodeResponse> getCode(@PathVariable String groupId) {
         InviteCodeResponse response = groupSelectService.getInviteCode(groupId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/group/{groupId}")
+    ResponseEntity<GroupResponse> getGroupInfo(@PathVariable String groupId) {
+        GroupResponse response = groupSelectService.getGroupInfo(groupId);
 
         return ResponseEntity.ok(response);
     }

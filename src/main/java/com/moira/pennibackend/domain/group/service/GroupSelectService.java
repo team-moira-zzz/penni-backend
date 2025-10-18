@@ -1,5 +1,6 @@
 package com.moira.pennibackend.domain.group.service;
 
+import com.moira.pennibackend.domain.group.dto.response.GroupResponse;
 import com.moira.pennibackend.domain.group.dto.response.InviteCodeResponse;
 import com.moira.pennibackend.domain.group.mapper.GroupMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,5 +15,10 @@ public class GroupSelectService {
     @Transactional(readOnly = true)
     public InviteCodeResponse getInviteCode(String groupId) {
         return groupMapper.selectCode(groupId);
+    }
+
+    @Transactional(readOnly = true)
+    public GroupResponse getGroupInfo(String groupId) {
+        return groupMapper.selectGroupInfo(groupId);
     }
 }

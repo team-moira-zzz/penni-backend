@@ -57,4 +57,19 @@
         FROM   ACCOUNT_BOOK_GROUP
         WHERE  id = #{groupId}
     </select>
+
+    <!-- 그룹 정보 조회 -->
+    <select id="selectGroup" resultType="com.moira.pennibackend.domain.group.dto.response.GroupResponse">
+        SELECT
+               A.id          AS groupId
+             , A.name        AS name
+             , A.description AS description
+             , A.code        AS code
+             , A.created_at  AS createdAt
+             , A.user_id     AS userId
+             , B.nickname    AS userNickname
+        FROM       ACCOUNT_BOOK_GROUP A
+        INNER JOIN USER               B
+        ON B.id = A.user_id
+    </select>
 </mapper>
