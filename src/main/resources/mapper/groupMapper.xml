@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moira.pennibackend.domain.group.mapper.GroupMapper">
-    <!-- 그룹 가입 여부 조회 -->
+    <!-- ========================================================================================================== -->
+    <!-- 가입된 그룹의 ID 조회 -->
     <select id="selectGroupId" resultType="java.lang.String">
-        SELECT group_id
-        FROM   ACCOUNT_BOOK_GROUP_USER
-        WHERE  user_id = #{userId} AND left_at IS NULL
+        SELECT group_id FROM "ACCOUNT_BOOK_GROUP_USER" WHERE  user_id = #{userId} AND left_at IS NULL
     </select>
 
-    <select id="checkGroupUser">
+    <!-- ========================================================================================================== -->
+    <!-- 코드 중복 여부 조회 -->
+    <select id="checkCode">
+        SELECT COUNT(group_id) FROM "ACCOUNT_BOOK_GROUP" WHERE code = #{code}
+    </select>
+
+    <select id="checkGroupUser" resultType="java.lang.Integer">
         SELECT COUNT(group_id)
-        FROM   ACCOUNT_BOOK_GROUP_USER
+        FROM   "ACCOUNT_BOOK_GROUP_USER"
         WHERE  user_id = #{userId} AND group_id = #{groupId} AND left_at IS NULL
     </select>
 
-    <!-- 그룹 생성 및 가입 -->
+    <!-- ========================================================================================================== -->
+    <!-- 그룹 생성 -->
     <insert id="insertAccountBookGroup" parameterType="com.moira.pennibackend.global.entity.AccountBookGroup">
-        INSERT INTO ACCOUNT_BOOK_GROUP (
+        INSERT INTO "ACCOUNT_BOOK_GROUP" (
                id
              , user_id
              , name
@@ -36,41 +42,41 @@
         )
     </insert>
 
+    <!-- ========================================================================================================== -->
+    <!-- 그룹 가입 -->
     <insert id="insertAccountBookGroupUser" parameterType="com.moira.pennibackend.global.entity.AccountBookGroupUser">
-        INSERT INTO ACCOUNT_BOOK_GROUP_USER (
-               group_id
-             , user_id
-             , joined_at
-             , left_at
+        INSERT INTO "ACCOUNT_BOOK_GROUP_USER" (
+                                                group_id
+                                              , user_id
+                                              , joined_at
+                                              , left_at
         )
         VALUES (
-               #{groupId}
-             , #{userId}
-             , #{joinedAt}
-             , #{leftAt}
-        )
+                 #{groupId}
+               , #{userId}
+               , #{joinedAt}
+               , #{leftAt}
+               )
     </insert>
 
-    <!-- 초대 코드 조회 -->
     <select id="selectCode" resultType="com.moira.pennibackend.domain.group.dto.response.InviteCodeResponse">
         SELECT code
-        FROM   ACCOUNT_BOOK_GROUP
+        FROM   "ACCOUNT_BOOK_GROUP"
         WHERE  id = #{groupId}
     </select>
 
-    <!-- 그룹 정보 조회 -->
     <select id="selectGroupByCode" resultType="com.moira.pennibackend.domain.group.dto.response.GroupResponse">
         SELECT
-               A.id          AS groupId
+            A.id          AS groupId
              , A.name        AS name
              , A.description AS description
              , A.code        AS code
              , A.created_at  AS createdAt
              , A.user_id     AS userId
              , B.nickname    AS userNickname
-        FROM       ACCOUNT_BOOK_GROUP A
-        INNER JOIN USER               B
-        ON B.id = A.user_id
+        FROM       "ACCOUNT_BOOK_GROUP" A
+                       INNER JOIN "USER" B
+                                  ON B.id = A.user_id
         WHERE A.code = #{code}
     </select>
 </mapper>

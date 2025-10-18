@@ -4,7 +4,7 @@ import com.moira.pennibackend.domain.group.dto.request.GroupCreateRequest;
 import com.moira.pennibackend.domain.group.dto.response.GroupIdResponse;
 import com.moira.pennibackend.domain.group.dto.response.GroupResponse;
 import com.moira.pennibackend.domain.group.dto.response.InviteCodeResponse;
-import com.moira.pennibackend.domain.group.service.GroupCheckService;
+import com.moira.pennibackend.domain.group.service.GroupSelectIdService;
 import com.moira.pennibackend.domain.group.service.GroupCreateService;
 import com.moira.pennibackend.domain.group.service.GroupSelectService;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
@@ -15,22 +15,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RequestMapping("/api")
 @RestController
 public class GroupController {
-    private final GroupCheckService groupCheckService;
+    private final GroupSelectIdService groupSelectIdService;
     private final GroupCreateService groupCreateService;
     private final GroupSelectService groupSelectService;
 
-    @GetMapping("/group/check")
+    @GetMapping("/api/group/check")
     ResponseEntity<GroupIdResponse> getGroupId(@UserPrincipal SimpleUserAuth simpleUserAuth) {
-        String groupId = groupCheckService.getGroupId(simpleUserAuth);
-        GroupIdResponse groupIdResponse = new GroupIdResponse(groupId);
+        GroupIdResponse groupIdResponse = groupSelectIdService.getGroupId(simpleUserAuth);
 
         return ResponseEntity.ok().body(groupIdResponse);
     }
 
-    @PostMapping("/group")
+    @PostMapping("/api/group")
     ResponseEntity<Object> createGroup(
             @RequestBody GroupCreateRequest request,
             @UserPrincipal SimpleUserAuth simpleUserAuth

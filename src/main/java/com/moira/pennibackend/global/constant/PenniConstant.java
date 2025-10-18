@@ -17,7 +17,7 @@ public class PenniConstant {
     public final static String NAVER_STATE_REDIS_PREFIX = "naver:state:";
     // 그룹 관련
     public static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    public static final int CODE_LENGTH = 8;
+    public static final int CODE_LENGTH = 12;
 
     public static List<String> DEFAULT_INCOME_CATEGORY_NAMES = List.of("급여/월급", "용돈", "금융/투자", "기타");
     public static List<String> DEFAULT_EXPENSE_CATEGORY_NAMES = List.of("식비", "교통비", "데이트", "문화/취미", "건강/의료", "교육/육아", "기타");

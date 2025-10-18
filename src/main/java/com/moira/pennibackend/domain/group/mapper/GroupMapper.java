@@ -10,14 +10,18 @@ import java.util.List;
 
 @Mapper
 public interface GroupMapper {
-    // 그룹 가입 여부 조회
+    // 가입된 그룹의 ID 조회
     List<String> selectGroupId(String userId);
+
+    // 코드 중복 여부 체크
+    int checkCode(String code);
 
     int checkGroupUser(String groupId, String userId);
 
-    // 그룹 생성 및 가입
+    // 그룹 생성
     void insertAccountBookGroup(AccountBookGroup accountBookGroup);
 
+    // 그룹 가입
     void insertAccountBookGroupUser(AccountBookGroupUser accountBookGroupUser);
 
     // 초대 코드 조회

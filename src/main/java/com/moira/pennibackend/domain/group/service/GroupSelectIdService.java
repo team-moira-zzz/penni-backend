@@ -1,5 +1,6 @@
 package com.moira.pennibackend.domain.group.service;
 
+import com.moira.pennibackend.domain.group.dto.response.GroupIdResponse;
 import com.moira.pennibackend.domain.group.mapper.GroupMapper;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
 import com.moira.pennibackend.global.exception.ErrorCode;
@@ -15,11 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class GroupCheckService {
+public class GroupSelectIdService {
     private final GroupMapper groupMapper;
 
     @Transactional(readOnly = true)
-    public String getGroupId(SimpleUserAuth simpleUserAuth) {
+    public GroupIdResponse getGroupId(SimpleUserAuth simpleUserAuth) {
         String userId = simpleUserAuth.userId();
 
         // [1] 가입된 그룹의 ID를 조회한다.
@@ -33,6 +34,6 @@ public class GroupCheckService {
         }
 
         // [3] 가입된 그룹 ID를 리턴하되, 가입된 그룹이 없는 경우에는 null을 리턴한다.
-        return !groupIdList.isEmpty() ? groupIdList.getFirst() : null;
+        return !groupIdList.isEmpty() ? new GroupIdResponse(groupIdList.getFirst()) : null;
     }
 }
