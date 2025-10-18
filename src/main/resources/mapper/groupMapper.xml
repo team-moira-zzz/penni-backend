@@ -4,13 +4,13 @@
     <!-- ========================================================================================================== -->
     <!-- 가입된 그룹의 ID 조회 -->
     <select id="selectGroupId" resultType="java.lang.String">
-        SELECT group_id FROM "ACCOUNT_BOOK_GROUP_USER" WHERE  user_id = #{userId} AND left_at IS NULL
+        SELECT group_id FROM "ACCOUNT_BOOK_GROUP_USER" WHERE user_id = #{userId} AND left_at IS NULL
     </select>
 
     <!-- ========================================================================================================== -->
     <!-- 코드 중복 여부 조회 -->
     <select id="checkCode">
-        SELECT COUNT(group_id) FROM "ACCOUNT_BOOK_GROUP" WHERE code = #{code}
+        SELECT COUNT(id) FROM "ACCOUNT_BOOK_GROUP" WHERE code = #{code}
     </select>
 
     <select id="checkGroupUser" resultType="java.lang.Integer">

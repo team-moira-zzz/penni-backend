@@ -27,7 +27,7 @@ public class GroupCreateService {
         do {
             code = groupCodeGenerator.generateRandomCode();
         }
-        while (groupMapper.checkCode(code) < 1);
+        while (groupMapper.checkCode(code) >= 1);
 
         // [2] DTO -> 엔티티 변환
         AccountBookGroup accountBookGroup = new AccountBookGroup(request, userId, code);

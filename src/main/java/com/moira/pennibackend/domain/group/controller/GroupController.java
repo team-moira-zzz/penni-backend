@@ -21,7 +21,7 @@ public class GroupController {
     private final GroupCreateService groupCreateService;
     private final GroupSelectService groupSelectService;
 
-    @GetMapping("/api/group/check")
+    @GetMapping("/api/group/id")
     ResponseEntity<GroupIdResponse> getGroupId(@UserPrincipal SimpleUserAuth simpleUserAuth) {
         GroupIdResponse groupIdResponse = groupSelectIdService.getGroupId(simpleUserAuth);
 
