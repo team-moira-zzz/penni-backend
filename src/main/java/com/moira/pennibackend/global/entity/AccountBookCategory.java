@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -15,14 +16,14 @@ public class AccountBookCategory {
     private String groupId;
     private String name;
     private int displayOrder;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
     public AccountBookCategory(String groupId, CategoryType type, String name, int displayOrder) {
         this.type = type;
         this.groupId = groupId;
         this.name = name;
         this.displayOrder = displayOrder;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = OffsetDateTime.now();
     }
 
     public AccountBookCategory(CategoryAddRequest request, String groupId, int displayOrder) {
@@ -30,6 +31,6 @@ public class AccountBookCategory {
         this.groupId = groupId;
         this.name = request.name();
         this.displayOrder = displayOrder;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = OffsetDateTime.now();
     }
 }

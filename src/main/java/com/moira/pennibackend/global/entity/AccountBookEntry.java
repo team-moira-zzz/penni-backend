@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
@@ -23,7 +24,7 @@ public class AccountBookEntry {
     private LocalDate date;
     private AccountBookEntryType type;
     private AccountBookEntryMethod method;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
     public AccountBookEntry(String userId, String groupId, AccountBookEntryAddRequest request) {
         this.id = UUID.randomUUID().toString();
@@ -36,6 +37,6 @@ public class AccountBookEntry {
         this.date = request.date();
         this.type = AccountBookEntryType.valueOf(request.type());
         this.method = AccountBookEntryMethod.valueOf(request.method());
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = OffsetDateTime.now();
     }
 }

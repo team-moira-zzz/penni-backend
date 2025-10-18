@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
@@ -15,8 +16,8 @@ public class AccountBookGroup {
     private String name;
     private String description;
     private String code;
-    private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime deletedAt;
 
     public AccountBookGroup(GroupCreateRequest request, String userId, String code) {
         this.id = UUID.randomUUID().toString();
@@ -24,7 +25,7 @@ public class AccountBookGroup {
         this.name = request.name();
         this.description = request.description();
         this.code = code;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = OffsetDateTime.now();
         this.deletedAt = null;
     }
 }
