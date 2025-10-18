@@ -9,6 +9,10 @@ public enum ErrorCode {
     KAKAO_LOGIN_ERROR("S002", "카카오 로그인 과정에서 알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
     KAKAO_LOGIN_TOKEN_ERROR("S003", "카카오 토큰 발급 과정에서 오류가 발생했습니다."),
     KAKAO_LOGIN_USER_INFO_ERROR("S004", "카카오 유저 정보 조회 과정에서 오류가 발생했습니다."),
+    NAVER_LOGIN_ERROR("S005", "네이버 로그인 과정에서 알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
+    NAVER_LOGIN_TOKEN_ERROR("S006", "네이버 토큰 발급 과정에서 오류가 발생했습니다."),
+    NAVER_LOGIN_INVALID_STATE("S007", "로그인 요청이 만료되었거나 보안 토큰이 유효하지 않습니다. 다시 시도해주세요."),
+    NAVER_LOGIN_USER_INFO_ERROR("S008", "네이버 유저 정보 조회 과정에서 오류가 발생했습니다."),
 
     // 권한 관련 에러코드
     INVALID_AUTHORIZATION_HEADER("A001", "Authorization 헤더에 토큰 정보가 포함되어 있지 않습니다."),

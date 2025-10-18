@@ -19,7 +19,7 @@ import static com.moira.pennibackend.global.constant.PenniConstant.KAKAO_USER_IN
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class OauthRequestSender {
+public class KakaoLoginSender {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${kakao.client_id}")

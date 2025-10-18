@@ -1,6 +1,6 @@
 package com.moira.pennibackend.domain.login.service;
 
-import com.moira.pennibackend.domain.login.component.OauthRequestSender;
+import com.moira.pennibackend.domain.login.component.KakaoLoginSender;
 import com.moira.pennibackend.domain.login.dto.response.TokenResponse;
 import com.moira.pennibackend.domain.login.dto.response.kakao.KakaoUserInfoResponse;
 import com.moira.pennibackend.domain.login.mapper.LoginMapper;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class KakaoLoginService {
     private final JwtProvider jwtProvider;
-    private final OauthRequestSender oauthRequestSender;
+    private final KakaoLoginSender kakaoLoginSender;
     private final LoginMapper loginMapper;
 
     private TokenResponse createTokens(User user) {
@@ -29,8 +29,8 @@ public class KakaoLoginService {
     @Transactional
     public TokenResponse login(String code, String ipAddress) {
         // [1] 유저 정보 조회 (카카오 API 통신)
-        String kakaoAtk = oauthRequestSender.getToken(code);
-        KakaoUserInfoResponse userInfo = oauthRequestSender.getUserInfo(kakaoAtk);
+        String kakaoAtk = kakaoLoginSender.getToken(code);
+        KakaoUserInfoResponse userInfo = kakaoLoginSender.getUserInfo(kakaoAtk);
 
         String email = userInfo.account().email();
         String nickname = userInfo.account().profile().nickname();
