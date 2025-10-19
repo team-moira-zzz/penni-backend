@@ -18,7 +18,7 @@ public class DefaultCategoryAddService {
     @Transactional
     public void addDefaultCategories(String groupId) {
         // [1] 수입 카테고리 추가
-        int displayOrder = 0;
+        long displayOrder = 0;
 
         for (String name : DEFAULT_INCOME_CATEGORY_NAMES) {
             AccountBookCategory accountBookCategory = new AccountBookCategory(

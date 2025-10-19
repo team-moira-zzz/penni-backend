@@ -5,7 +5,6 @@ import com.moira.pennibackend.global.entity.enums.CategoryType;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Getter
@@ -15,10 +14,10 @@ public class AccountBookCategory {
     private CategoryType type;
     private String groupId;
     private String name;
-    private int displayOrder;
+    private long displayOrder;
     private OffsetDateTime createdAt;
 
-    public AccountBookCategory(String groupId, CategoryType type, String name, int displayOrder) {
+    public AccountBookCategory(String groupId, CategoryType type, String name, long displayOrder) {
         this.type = type;
         this.groupId = groupId;
         this.name = name;
@@ -26,7 +25,7 @@ public class AccountBookCategory {
         this.createdAt = OffsetDateTime.now();
     }
 
-    public AccountBookCategory(CategoryAddRequest request, String groupId, int displayOrder) {
+    public AccountBookCategory(CategoryAddRequest request, String groupId, long displayOrder) {
         this.type = CategoryType.valueOf(request.type());
         this.groupId = groupId;
         this.name = request.name();

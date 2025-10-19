@@ -11,11 +11,12 @@ public interface CategoryMapper {
     // 카테고리 목록 조회
     List<CategoryResponse> selectCategoryList(String groupId, String type);
 
-    // 카테고리 추가
-    Integer selectLastDisplayOrder(String groupId);
+    // 마지막 정렬번호(displayOrder) 조회
+    Long selectLastDisplayOrder(String groupId);
 
+    // 카테고리 추가
     void insertCategory(AccountBookCategory accountBookCategory);
 
     // 카테고리 삭제
-    void deleteCategory(String groupId, Long id);
+    void deleteCategory(String groupId, Long categoryId);
 }
