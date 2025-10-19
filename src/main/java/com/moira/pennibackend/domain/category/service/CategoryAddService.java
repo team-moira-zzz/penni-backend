@@ -24,7 +24,7 @@ public class CategoryAddService {
 
     @Transactional
     @GroupUserCheck
-    public void addCategory(CategoryAddRequest request, String groupId, SimpleUserAuth simpleUserAuth) {
+    public void add(CategoryAddRequest request, String groupId, SimpleUserAuth simpleUserAuth) {
         // [1] 유효성 검사
         this.validate(request);
 

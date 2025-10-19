@@ -42,6 +42,12 @@
         )
     </insert>
 
+    <update id="updateCategoryOrder">
+        UPDATE "ACCOUNT_BOOK_CATEGORY"
+        SET    display_order = #{displayOrder}
+        WHERE  group_id = #{groupId} AND id = #{categoryId} AND type = #{type}
+    </update>
+
     <!-- ========================================================================================================== -->
     <!-- 카테고리 삭제 -->
     <delete id="deleteCategory">

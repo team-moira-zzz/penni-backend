@@ -5,6 +5,7 @@ import com.moira.pennibackend.global.entity.AccountBookCategory;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CategoryMapper {
@@ -16,6 +17,9 @@ public interface CategoryMapper {
 
     // 카테고리 추가
     void insertCategory(AccountBookCategory accountBookCategory);
+
+    // 카테고리 재정렬
+    void updateCategoryOrder(Map<String, Object> sendMap);
 
     // 카테고리 삭제
     void deleteCategory(String groupId, Long categoryId);

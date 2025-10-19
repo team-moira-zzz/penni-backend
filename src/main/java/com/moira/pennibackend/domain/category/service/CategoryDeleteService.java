@@ -14,7 +14,7 @@ public class CategoryDeleteService {
 
     @GroupUserCheck
     @Transactional
-    public void deleteCategory(Long categoryId, String groupId, SimpleUserAuth simpleUserAuth) {
+    public void delete(Long categoryId, String groupId, SimpleUserAuth simpleUserAuth) {
         categoryMapper.deleteCategory(groupId, categoryId);
     }
 }
