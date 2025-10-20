@@ -28,11 +28,17 @@ public class EntrySelectService {
     @Transactional(readOnly = true)
     public List<DailyEntryResponse> getDailyEntries(String groupId, int year, int month, int day, String sort) {
         // [1] 유효성 검사
-        this.validate(sort);
+        if (sort != null) {
+            this.validate(sort);
+        }
 
         // [2] 일별 가계부 항목 조회
         String dateString = stringDateFormatter.getYYYYMMDDStr(year, month, day);
-        return entryMapper.selectDailyEntryList(groupId, dateString, sort);
+        return entryMapper.selectDailyEntryList(
+                groupId,
+                dateString,
+                sort != null ? sort : EntrySortCondition.OLDEST.name()
+        );
     }
 
     @Transactional(readOnly = true)

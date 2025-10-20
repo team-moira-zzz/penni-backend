@@ -43,7 +43,7 @@ public class EntryController {
             @PathVariable Integer year,
             @PathVariable Integer month,
             @PathVariable Integer day,
-            @RequestParam String sort
+            @RequestParam(required = false) String sort
     ) {
         List<DailyEntryResponse> result = entrySelectService.getDailyEntries(groupId, year, month, day, sort);
 
