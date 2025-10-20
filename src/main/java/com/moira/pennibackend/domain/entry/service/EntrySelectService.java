@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,13 +18,13 @@ public class EntrySelectService {
     private final EntryMapper entryMapper;
 
     @Transactional(readOnly = true)
-    public List<DailyEntryResponse> getDailyEntries(String groupId, LocalDate date) {
-        return entryMapper.selectDailyEntryList(groupId, date);
+    public List<DailyEntryResponse> getDailyEntries(String groupId, String dateString) {
+        return entryMapper.selectDailyEntryList(groupId, dateString);
     }
 
     @Transactional(readOnly = true)
-    public DailyEntryTotalResponse getDailyEntriesTotal(String groupId, LocalDate date) {
-        return entryMapper.selectDailyEntryTotal(groupId, date);
+    public DailyEntryTotalResponse getDailyEntriesTotal(String groupId, String dateString) {
+        return entryMapper.selectDailyEntryTotal(groupId, dateString);
     }
 
     @Transactional(readOnly = true)

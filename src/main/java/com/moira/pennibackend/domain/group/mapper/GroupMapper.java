@@ -16,6 +16,7 @@ public interface GroupMapper {
     // 코드 중복 여부 체크
     int checkCode(String code);
 
+    // 그룹 내에 존재하는 유저인지 확인
     int checkGroupUser(String groupId, String userId);
 
     // 그룹 생성

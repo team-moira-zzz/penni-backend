@@ -7,23 +7,23 @@ import com.moira.pennibackend.domain.entry.dto.response.MonthlyEntryTotalRespons
 import com.moira.pennibackend.global.entity.AccountBookEntry;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
 public interface EntryMapper {
-    // 가계부 항목 검증 (그룹 포함 여부 확인)
+    // 그룹 내에 존재하는 가계부 항목인지 확인
     int checkGroupEntry(String groupId, String entryId);
 
     // 가계부 항목 추가
     void insertEntry(AccountBookEntry accountBookEntry);
 
     // 일별 가계부 항목 조회
-    List<DailyEntryResponse> selectDailyEntryList(String groupId, LocalDate date);
+    List<DailyEntryResponse> selectDailyEntryList(String groupId, String dateString);
 
-    DailyEntryTotalResponse selectDailyEntryTotal(String groupId, LocalDate date);
+    // 일별 수입/지출 총합 조회
+    DailyEntryTotalResponse selectDailyEntryTotal(String groupId, String dateString);
 
-    // 월별 가계부 항목 조회
+    // 월별 수입/지출 총합 조회
     MonthlyEntryTotalResponse selectMonthlyEntryTotal(String groupId, String dateString);
 
     // 가계부 항목 수정

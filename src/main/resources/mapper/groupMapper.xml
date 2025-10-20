@@ -13,6 +13,8 @@
         SELECT COUNT(id) FROM "ACCOUNT_BOOK_GROUP" WHERE code = #{code}
     </select>
 
+    <!-- ========================================================================================================== -->
+    <!-- 그룹 내에 존재하는 유저인지 확인  -->
     <select id="checkGroupUser" resultType="java.lang.Integer">
         SELECT COUNT(group_id)
         FROM   "ACCOUNT_BOOK_GROUP_USER"

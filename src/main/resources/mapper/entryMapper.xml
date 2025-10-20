@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moira.pennibackend.domain.entry.mapper.EntryMapper">
-    <!-- 가계부 항목 검증 (그룹 포함 여부 확인) -->
-    <select id="checkGroupEntry">
+    <!-- ========================================================================================================== -->
+    <!-- 그룹 내에 존재하는 가계부 항목인지 확인 -->
+    <select id="checkGroupEntry" resultType="java.lang.Integer">
         SELECT COUNT(id)
-        FROM   ACCOUNT_BOOK_ENTRY
+        FROM   "ACCOUNT_BOOK_ENTRY"
         WHERE  group_id = #{groupId} AND id = #{entryId}
     </select>
+
+    <!-- ========================================================================================================== -->
     <!-- 가계부 항목 저장 -->
     <insert id="insertEntry" parameterType="com.moira.pennibackend.global.entity.AccountBookEntry">
-        INSERT INTO ACCOUNT_BOOK_ENTRY (
+        INSERT INTO "ACCOUNT_BOOK_ENTRY" (
                id
              , user_id
              , group_id
@@ -33,11 +36,12 @@
              , #{date}
              , #{type}
              , #{method}
-             , CURRENT_TIMESTAMP
+             , NOW()
         )
     </insert>
 
-    <!-- 일별 가계부 항목 조회 -->
+    <!-- ========================================================================================================== -->
+    <!-- 일별 가계부 항목 목록 조회 -->
     <select id="selectDailyEntryList" resultType="com.moira.pennibackend.domain.entry.dto.response.DailyEntryResponse">
         SELECT
                A.id
@@ -50,43 +54,45 @@
              , C.name        AS categoryName
              , A.user_id     AS userId
              , B.nickname    AS userNickname
-        FROM   ACCOUNT_BOOK_ENTRY A
+        FROM   "ACCOUNT_BOOK_ENTRY" A
         /* INNER JOIN: USER 테이블 */
-        INNER JOIN USER B
-        ON         B.id = A.user_id
+        INNER JOIN "USER" B
+        ON B.id = A.user_id
         /* LEFT JOIN: ACCOUNT_BOOK_CATEGORY 테이블 */
-        LEFT JOIN ACCOUNT_BOOK_CATEGORY C
-        ON         C.id = A.category_id
-        AND        C.group_id = #{groupId}
+        LEFT JOIN "ACCOUNT_BOOK_CATEGORY" C
+        ON C.id = A.category_id AND C.group_id = #{groupId}
         /* 조건문 */
-        WHERE      A.group_id = #{groupId}
-        AND        A.date = #{date}
+        WHERE A.group_id = #{groupId}
+        AND   TO_CHAR(A.date, 'YYYYMMDD') = #{dateString}
         /* 정렬 */
-        ORDER BY   A.created_at DESC
+        ORDER BY A.created_at DESC
     </select>
 
-    <!-- 일별 가계부 수입 및 지출 총합 -->
+    <!-- ========================================================================================================== -->
+    <!-- 일별 수입/지출 총합 조회 -->
     <select id="selectDailyEntryTotal" resultType="com.moira.pennibackend.domain.entry.dto.response.DailyEntryTotalResponse">
         SELECT
-               #{date}
-             , IFNULL(SUM(CASE WHEN type = 'INCOME' THEN price ELSE 0 END), 0)
-             , IFNULL(SUM(CASE WHEN type = 'EXPENSE' THEN price ELSE 0 END), 0)
-        FROM ACCOUNT_BOOK_ENTRY
-        WHERE group_id = #{groupId} AND date = #{date}
+               COALESCE(SUM(CASE WHEN type = 'INCOME' THEN price ELSE 0 END), 0) AS totalIncome
+             , COALESCE(SUM(CASE WHEN type = 'EXPENSE' THEN price ELSE 0 END), 0) AS totalExpense
+        FROM "ACCOUNT_BOOK_ENTRY"
+        WHERE group_id = #{groupId}
+        AND TO_CHAR(date, 'YYYYMMDD') = #{dateString}
     </select>
 
-    <!-- 월별 가계부 수입 및 지출 총합 -->
+    <!-- ========================================================================================================== -->
+    <!-- 월별 수입/지출 총합 조회 -->
     <select id="selectMonthlyEntryTotal" resultType="com.moira.pennibackend.domain.entry.dto.response.MonthlyEntryTotalResponse">
         SELECT
-               IFNULL(SUM(CASE WHEN type = 'INCOME' THEN price ELSE 0 END), 0)
-             , IFNULL(SUM(CASE WHEN type = 'EXPENSE' THEN price ELSE 0 END), 0)
-        FROM ACCOUNT_BOOK_ENTRY
-        WHERE group_id = #{groupId} AND DATE_FORMAT(date, '%Y%m') = #{dateString}
+               COALESCE(SUM(CASE WHEN type = 'INCOME' THEN price ELSE 0 END), 0) AS totalIncome
+             , COALESCE(SUM(CASE WHEN type = 'EXPENSE' THEN price ELSE 0 END), 0) AS totalExpense
+        FROM "ACCOUNT_BOOK_ENTRY"
+        WHERE group_id = #{groupId} AND TO_CHAR(date, 'YYYYMM') = #{dateString}
     </select>
 
+    <!-- ========================================================================================================== -->
     <!-- 가계부 항목 수정 -->
     <update id="updateEntry">
-        UPDATE ACCOUNT_BOOK_ENTRY
+        UPDATE "ACCOUNT_BOOK_ENTRY"
         SET
                category_id = #{request.categoryId}
              , content     = #{request.content}
@@ -97,9 +103,9 @@
         WHERE  id = #{entryId} AND group_id = #{groupId}
     </update>
 
-    <!-- 가계부 항목 삭제 -->
+    <!-- ========================================================================================================== -->
+    <!-- 가계부 항목 식제 -->
     <delete id="deleteEntry">
-        DELETE FROM ACCOUNT_BOOK_ENTRY
-        WHERE id = #{entryId} AND group_id = #{groupId}
+        DELETE FROM "ACCOUNT_BOOK_ENTRY" WHERE id = #{entryId} AND group_id = #{groupId}
     </delete>
 </mapper>

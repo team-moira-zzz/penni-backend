@@ -16,11 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/api")
 @RestController
 public class EntryController {
     private final EntryAddService entryAddService;
@@ -28,7 +26,7 @@ public class EntryController {
     private final EntrySelectService entrySelectService;
     private final EntryUpdateService entryUpdateService;
 
-    @PostMapping("/group/{groupId}/entries")
+    @PostMapping("/api/group/{groupId}/entries")
     ResponseEntity<Object> addEntry(
             @PathVariable String groupId,
             @RequestBody AccountBookEntryAddRequest request,
@@ -39,45 +37,45 @@ public class EntryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
-    @GetMapping("/group/{groupId}/entries/{year}/{month}/{day}")
+    @GetMapping("/api/group/{groupId}/entries/{year}/{month}/{day}")
     ResponseEntity<List<DailyEntryResponse>> getDailyEntries(
             @PathVariable String groupId,
             @PathVariable Integer year,
             @PathVariable Integer month,
             @PathVariable Integer day
     ) {
-        LocalDate date = LocalDate.of(year, month, day);
-        List<DailyEntryResponse> list = entrySelectService.getDailyEntries(groupId, date);
+        String dateString = "%4d%2d%2d".formatted(year, month, day);
+        List<DailyEntryResponse> result = entrySelectService.getDailyEntries(groupId, dateString);
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/group/{groupId}/entries/total/{year}/{month}/{day}")
+    @GetMapping("/api/group/{groupId}/entries/total/{year}/{month}/{day}")
     ResponseEntity<DailyEntryTotalResponse> getDailyEntriesTotal(
             @PathVariable String groupId,
             @PathVariable Integer year,
             @PathVariable Integer month,
             @PathVariable Integer day
     ) {
-        LocalDate date = LocalDate.of(year, month, day);
-        DailyEntryTotalResponse result = entrySelectService.getDailyEntriesTotal(groupId, date);
+        String dateString = "%4d%2d%2d".formatted(year, month, day);
+        DailyEntryTotalResponse result = entrySelectService.getDailyEntriesTotal(groupId, dateString);
 
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/group/{groupId}/entries/total/{year}/{month}")
+    @GetMapping("/api/group/{groupId}/entries/total/{year}/{month}")
     ResponseEntity<MonthlyEntryTotalResponse> getMonthlyDailyEntriesTotal(
             @PathVariable String groupId,
             @PathVariable Integer year,
             @PathVariable Integer month
     ) {
-        String dateString = "%2d%2d".formatted(year, month);
+        String dateString = "%4d%2d".formatted(year, month);
         MonthlyEntryTotalResponse result = entrySelectService.getMonthlyEntriesTotal(groupId, dateString);
 
         return ResponseEntity.ok(result);
     }
 
-    @PutMapping("/group/{groupId}/entries/{entryId}")
+    @PutMapping("/api/group/{groupId}/entries/{entryId}")
     ResponseEntity<Object> updateEntry(
             @PathVariable String groupId,
             @PathVariable String entryId,
@@ -89,7 +87,7 @@ public class EntryController {
         return ResponseEntity.ok(null);
     }
 
-    @DeleteMapping("/group/{groupId}/entries/{entryId}")
+    @DeleteMapping("/api/group/{groupId}/entries/{entryId}")
     ResponseEntity<Object> deleteEntry(
             @PathVariable String groupId,
             @PathVariable String entryId,
