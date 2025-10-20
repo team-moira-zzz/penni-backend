@@ -65,7 +65,20 @@
         WHERE A.group_id = #{groupId}
         AND   TO_CHAR(A.date, 'YYYYMMDD') = #{dateString}
         /* 정렬 */
-        ORDER BY A.created_at DESC
+        <choose>
+            <when test="sort == 'OLDEST'">
+                ORDER BY A.created_at DESC
+            </when>
+            <when test="sort == 'LATEST'">
+                ORDER BY A.created_at ASC
+            </when>
+            <when test="sort == 'HIGH_PRICE'">
+                ORDER BY A.price DESC
+            </when>
+            <when test="sort == 'LOW_PRICE'">
+                ORDER BY A.price ASC
+            </when>
+        </choose>
     </select>
 
     <!-- ========================================================================================================== -->

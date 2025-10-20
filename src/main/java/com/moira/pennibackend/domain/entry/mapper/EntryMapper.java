@@ -18,7 +18,7 @@ public interface EntryMapper {
     void insertEntry(AccountBookEntry accountBookEntry);
 
     // 일별 가계부 항목 조회
-    List<DailyEntryResponse> selectDailyEntryList(String groupId, String dateString);
+    List<DailyEntryResponse> selectDailyEntryList(String groupId, String dateString, String sort);
 
     // 일별 수입/지출 총합 조회
     DailyEntryTotalResponse selectDailyEntryTotal(String groupId, String dateString);
