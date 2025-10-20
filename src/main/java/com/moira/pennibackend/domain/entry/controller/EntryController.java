@@ -44,8 +44,7 @@ public class EntryController {
             @PathVariable Integer month,
             @PathVariable Integer day
     ) {
-        String dateString = "%4d%2d%2d".formatted(year, month, day);
-        List<DailyEntryResponse> result = entrySelectService.getDailyEntries(groupId, dateString);
+        List<DailyEntryResponse> result = entrySelectService.getDailyEntries(groupId, year, month, day);
 
         return ResponseEntity.ok(result);
     }
@@ -57,8 +56,7 @@ public class EntryController {
             @PathVariable Integer month,
             @PathVariable Integer day
     ) {
-        String dateString = "%4d%2d%2d".formatted(year, month, day);
-        DailyEntryTotalResponse result = entrySelectService.getDailyEntriesTotal(groupId, dateString);
+        DailyEntryTotalResponse result = entrySelectService.getDailyEntriesTotal(groupId, year, month, day);
 
         return ResponseEntity.ok(result);
     }
@@ -69,8 +67,7 @@ public class EntryController {
             @PathVariable Integer year,
             @PathVariable Integer month
     ) {
-        String dateString = "%4d%2d".formatted(year, month);
-        MonthlyEntryTotalResponse result = entrySelectService.getMonthlyEntriesTotal(groupId, dateString);
+        MonthlyEntryTotalResponse result = entrySelectService.getMonthlyEntriesTotal(groupId, year, month);
 
         return ResponseEntity.ok(result);
     }
