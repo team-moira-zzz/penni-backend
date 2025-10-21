@@ -2,6 +2,7 @@ package com.moira.pennibackend.global.entity;
 
 import com.moira.pennibackend.domain.fixed.dto.request.FixedExpenseAddRequest;
 import com.moira.pennibackend.global.entity.enums.FixedExpenseCycle;
+import com.moira.pennibackend.global.entity.enums.PaymentMethod;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class AccountBookFixedExpense {
     private Integer annualMonth;
     private Integer annualDay;
     private int price;
+    private PaymentMethod method;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
@@ -35,6 +37,7 @@ public class AccountBookFixedExpense {
         this.annualMonth = request.annualMonth();
         this.annualDay = request.annualDay();
         this.price = request.price();
+        this.method = PaymentMethod.valueOf(request.method());
         this.createdAt = OffsetDateTime.now();
         this.updatedAt = OffsetDateTime.now();
     }

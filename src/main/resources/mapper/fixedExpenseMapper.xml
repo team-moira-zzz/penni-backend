@@ -15,6 +15,7 @@
              , annual_month
              , annual_day
              , price
+             , method
              , created_at
              , updated_at
         )
@@ -29,6 +30,7 @@
              , #{annualMonth}
              , #{annualDay}
              , #{price}
+             , #{method}
              , #{createdAt}
              , #{updatedAt}
         )
@@ -46,6 +48,7 @@
              , annual_month AS annualMonth
              , annual_day   AS annualDay
              , price
+             , method
              , created_at   AS createdAt
              , updated_at   AS updatedAt
         FROM "ACCOUNT_BOOK_FIXED_EXPENSE"
@@ -64,6 +67,7 @@
              , annual_month = #{request.annualMonth}
              , annual_day   = #{request.annualDay}
              , price        = #{request.price}
+             , method       = #{request.method}
              , updated_at   = NOW()
         WHERE group_id = #{groupId} AND id = #{fixedId}
     </update>

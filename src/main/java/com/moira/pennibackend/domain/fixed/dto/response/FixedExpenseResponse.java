@@ -11,6 +11,7 @@ public record FixedExpenseResponse(
         Integer annualMonth,
         Integer annualDay,
         Integer price,
+        String method,
         OffsetDateTime createdAt,
         OffsetDateTime updatedAt
 ) {

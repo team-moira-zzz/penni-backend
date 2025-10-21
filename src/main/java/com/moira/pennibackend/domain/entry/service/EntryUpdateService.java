@@ -5,7 +5,7 @@ import com.moira.pennibackend.domain.entry.mapper.EntryMapper;
 import com.moira.pennibackend.global.aop.GroupEntryCheck;
 import com.moira.pennibackend.global.aop.GroupUserCheck;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
-import com.moira.pennibackend.global.entity.enums.AccountBookEntryMethod;
+import com.moira.pennibackend.global.entity.enums.PaymentMethod;
 import com.moira.pennibackend.global.entity.enums.AccountBookEntryType;
 import com.moira.pennibackend.global.exception.ErrorCode;
 import com.moira.pennibackend.global.utility.EnumValidator;
@@ -21,7 +21,7 @@ public class EntryUpdateService {
 
     private void validate(AccountBookEntryUpdateRequest request) {
         enumValidator.validateStringValue(AccountBookEntryType.class, request.type(), ErrorCode.INVALID_CATEGORY_TYPE);
-        enumValidator.validateStringValue(AccountBookEntryMethod.class, request.method(), ErrorCode.INVALID_METHOD_TYPE);
+        enumValidator.validateStringValue(PaymentMethod.class, request.method(), ErrorCode.INVALID_METHOD_TYPE);
     }
 
     @GroupUserCheck
