@@ -4,6 +4,7 @@ import com.moira.pennibackend.domain.fixed.dto.request.FixedExpenseAddRequest;
 import com.moira.pennibackend.domain.fixed.dto.request.FixedExpenseUpdateRequest;
 import com.moira.pennibackend.domain.fixed.dto.response.FixedExpenseResponse;
 import com.moira.pennibackend.domain.fixed.service.FixedExpenseAddService;
+import com.moira.pennibackend.domain.fixed.service.FixedExpenseDeleteService;
 import com.moira.pennibackend.domain.fixed.service.FixedExpenseSelectService;
 import com.moira.pennibackend.domain.fixed.service.FixedExpenseUpdateService;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 public class FixedExpenseController {
     private final FixedExpenseAddService fixedExpenseAddService;
+    private final FixedExpenseDeleteService fixedExpenseDeleteService;
     private final FixedExpenseSelectService fixedExpenseSelectService;
     private final FixedExpenseUpdateService fixedExpenseUpdateService;
 
@@ -52,5 +54,16 @@ public class FixedExpenseController {
         fixedExpenseUpdateService.update(request, groupId, fixedId, simpleUserAuth);
 
         return ResponseEntity.ok(null);
+    }
+
+    @DeleteMapping("/api/group/{groupId}/fixed/{fixedId}")
+    ResponseEntity<Object> delete(
+            @PathVariable String groupId,
+            @PathVariable String fixedId,
+            @UserPrincipal SimpleUserAuth simpleUserAuth
+    ) {
+        fixedExpenseDeleteService.delete(groupId, fixedId, simpleUserAuth);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }

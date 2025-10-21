@@ -17,5 +17,12 @@ public interface FixedExpenseMapper {
     List<FixedExpenseResponse> selectAccountBookFixedExpenseList(String groupId);
 
     // 고정 지출 수정
-    void updateAccountBookFixedExpense(String groupId, String fixedId, @Param("request") FixedExpenseUpdateRequest fixedExpenseUpdateRequest);
+    void updateAccountBookFixedExpense(
+            String groupId,
+            String fixedId,
+            @Param("request") FixedExpenseUpdateRequest request
+    );
+
+    // 고정 지출 삭제
+    void deleteAccountBookFixedExpense(String groupId, String fixedId);
 }
