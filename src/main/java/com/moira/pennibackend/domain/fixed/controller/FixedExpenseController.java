@@ -1,9 +1,11 @@
 package com.moira.pennibackend.domain.fixed.controller;
 
 import com.moira.pennibackend.domain.fixed.dto.request.FixedExpenseAddRequest;
+import com.moira.pennibackend.domain.fixed.dto.request.FixedExpenseUpdateRequest;
 import com.moira.pennibackend.domain.fixed.dto.response.FixedExpenseResponse;
 import com.moira.pennibackend.domain.fixed.service.FixedExpenseAddService;
 import com.moira.pennibackend.domain.fixed.service.FixedExpenseSelectService;
+import com.moira.pennibackend.domain.fixed.service.FixedExpenseUpdateService;
 import com.moira.pennibackend.global.auth.SimpleUserAuth;
 import com.moira.pennibackend.global.auth.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 public class FixedExpenseController {
     private final FixedExpenseAddService fixedExpenseAddService;
     private final FixedExpenseSelectService fixedExpenseSelectService;
+    private final FixedExpenseUpdateService fixedExpenseUpdateService;
 
     @PostMapping("/api/group/{groupId}/fixed")
     ResponseEntity<Object> add(
@@ -37,5 +40,17 @@ public class FixedExpenseController {
         List<FixedExpenseResponse> result = fixedExpenseSelectService.getAll(groupId);
 
         return ResponseEntity.ok(result);
+    }
+
+    @PutMapping("/api/group/{groupId}/fixed/{fixedId}")
+    ResponseEntity<Object> update(
+            @RequestBody FixedExpenseUpdateRequest request,
+            @PathVariable String groupId,
+            @PathVariable String fixedId,
+            @UserPrincipal SimpleUserAuth simpleUserAuth
+    ) {
+        fixedExpenseUpdateService.update(request, groupId, fixedId, simpleUserAuth);
+
+        return ResponseEntity.ok(null);
     }
 }
